@@ -1,1 +1,58 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Arqiva CDN test</title>
 
+    <!-- hls.js should be always called BEFORE the System73 SDK dependencies -->
+    <script src="//cdn.jsdelivr.net/npm/hls.js@latest" type="application/javascript"></script>
+
+    <!-- hls.js and System73 SDK dependencies should be always called BEFORE the video tag. -->
+    <script src="//cdn.s73cloud.com/4/s73-sdk-hlsjs.js" type="application/javascript"></script>
+  </head>
+  <body>
+    <img
+      width="200"
+      src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cf/Arqiva_Logo.svg/320px-Arqiva_Logo.svg.png"
+    />
+    <h1 style="font-family:verdana;">Arqiva Delivery Optimisation and analytics demo page (Live HLS)</h1>
+    <h2 style="font-family:verdana;color:green">P2P enabled</h2>
+    
+    <video id="video" width="800" autoplay muted controls></video>
+
+    <script>
+      var video = document.getElementById('video');
+      if(Hls.isSupported()) {
+          var s73SdkConfig = {
+            apiKey: 'eyJoYXNoZWRfa2V5IjoiMWRsTzVTZ010SmZRaXFOdFVyb2NTTThsUGZoRmhaYVFKRklmMTV5ZElOOCIsInNpZ25hbF9zZXJ2ZXJfdXJsIjoid3NzOlwvXC9lbWVhLnM3M2Nsb3VkLmNvbTo0NDNcL3dzIiwic3R1bl9zZXJ2ZXJfdXJsIjpbInN0dW46c3R1bi1lbWVhLTAxLnM3M2Nsb3VkLmNvbTozNDc4Iiwic3R1bjpzdHVuLWVtZWEtMDIuczczY2xvdWQuY29tOjM0NzgiXSwibWV0cmljX3NpbmtfdXJsIjoiaHR0cHM6XC9cL2VtZWEuczczY2xvdWQuY29tOjQ0M1wvbWV0cmljc1wvdjEifQ==', // mandatory
+            contentSteering: '<YOUR_CONTENT_STEERING_RESOURCE>', // optional
+            channelId: 'Parliament Live', // optional
+            sharingContent: 'ALWAYS',
+            debug: 'info'
+          };
+          var playerConfig = {
+            // Add your custom player configuration here
+          };
+
+          var wrapper = S73HlsjsWrapper(s73SdkConfig);
+
+          wrapper.wrapPlayerConfig(playerConfig);
+
+          var player = new Hls(playerConfig);
+
+          wrapper.wrapPlayer(player);
+
+          wrapper.p2p.enable();
+
+          player.loadSource('https://dzfledr9yd4gp.cloudfront.net/out/v1/91407929b57f42f0bc9922e40be5c4cc/index.m3u8');
+          player.attachMedia(video);
+      }
+      // hls.js is not supported on platforms that do not have Media Source Extensions (MSE) enabled.
+      // When the browser has built-in HLS support (check using `canPlayType`), we can provide an HLS manifest (i.e. .m3u8 URL) directly to the video element throught the `src` property.
+      // This is using the built-in support of the plain video element, without using hls.js.
+      else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+          video.src = 'https://dzfledr9yd4gp.cloudfront.net/out/v1/91407929b57f42f0bc9922e40be5c4cc/index.m3u8';
+      }
+    </script>
+  </body>
+</html>
