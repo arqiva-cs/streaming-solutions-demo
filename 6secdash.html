@@ -49,11 +49,11 @@
       </div>
       <script>
         (() => {
-            const originalLog = console.log;
+         //   const originalLog = console.log;
             const originalInfo = console.info;
-            const originalWarn = console.warn;
-            const originalError = console.error;
-            const debugEl = document.getElementById('sys73Debug');
+         //   const originalWarn = console.warn;
+         //   const originalError = console.error;
+         //   const debugEl = document.getElementById('sys73Debug');
 
             const append = (fn, cssclass, args) => {
                 let msgDiv = document.createElement('div');
@@ -62,15 +62,15 @@
                 debugEl.prepend(msgDiv);
                 fn(...args);
             }
-
+/*
             console.error = function(...args){
                 append(originalLog,'s73_log', args);
             };
-
+*/
             console.info = function(...args){
                 append(originalInfo,'s73_info', args);
             };
-
+/*
             console.warn = function(...args){
                 append(originalWarn,'s73_warn', args);
             };
@@ -78,7 +78,7 @@
             console.error = function(...args){
                 append(originalError,'s73_error', args);
             };
-
+*/
           var player = dashjs.MediaPlayer().create();
 
           var s73SdkConfig = {
