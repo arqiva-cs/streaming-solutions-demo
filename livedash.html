@@ -6,7 +6,7 @@
 
     <!-- dash.js should be always called BEFORE the System73 SDK dependencies -->
     <script
-      src="//cdn.dashjs.org/latest/dash.all.min.js"
+      src="//cdn.dashjs.org/v4.7.4/dash.all.min.js"
       type="application/javascript"
     ></script>
 
@@ -33,15 +33,11 @@
 
   </head>
   <body>
-    <img
-      width="200"
-      src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cf/Arqiva_Logo.svg/320px-Arqiva_Logo.svg.png"
-    />
-    <h1 style="font-family: verdana">Analytics and Delivery Optimisation demo</h1>
-    <h2 style="font-family: verdana" id="mode">Live DASH via private CDN, dash.js player, optimisation enabled</h2>
+    <h1 style="font-family: verdana">Arqiva Analytics and Delivery Optimisation demo</h1>
+    <h2 style="font-family: verdana" id="mode">Live DASH ABR via private CDN, dash.js player, optimisation enabled</h2>
 
     <p>
-      <video id="video" autoplay muted></video>
+      <video id="video" width="640" autoplay muted></video>
     <p>
       Debug:
       <div id="sys73Debug">
@@ -82,15 +78,13 @@
 
           var s73SdkConfig = {
             apiKey:
-              "eyJoYXNoZWRfa2V5IjoiMWRsTzVTZ010SmZRaXFOdFVyb2NTTThsUGZoRmhaYVFKRklmMTV5ZElOOCIsInNpZ25hbF9zZXJ2ZXJfdXJsIjoid3NzOlwvXC9lbWVhLnM3M2Nsb3VkLmNvbTo0NDNcL3dzIiwic3R1bl9zZXJ2ZXJfdXJsIjpbInN0dW46c3R1bi1lbWVhLTAxLnM3M2Nsb3VkLmNvbTozNDc4Iiwic3R1bjpzdHVuLWVtZWEtMDIuczczY2xvdWQuY29tOjM0NzgiXSwibWV0cmljX3NpbmtfdXJsIjoiaHR0cHM6XC9cL2VtZWEuczczY2xvdWQuY29tOjQ0M1wvbWV0cmljc1wvdjEifQ", // mandatory
-            channelId: "Live dash via CDN", // optional
+              "eyJoYXNoZWRfa2V5IjoiU1BpRWVLc1ZqR09HeGp4b0hVRlN2TU9WQktLel91dmNYemJsOEp4V3d6WSIsInNpZ25hbF9zZXJ2ZXJfdXJsIjoid3NzOlwvXC9jZXJiZXJ1cy5lbWVhLnBvbHluZXQuczczY2xvdWQuY29tOjQ0M1wvd3MiLCJzdHVuX3NlcnZlcl91cmwiOlsic3R1bjpzdHVuLWVtZWEtMDEuczczY2xvdWQuY29tOjM0NzgiLCJzdHVuOnN0dW4tZW1lYS0wMi5zNzNjbG91ZC5jb206MzQ3OCJdLCJtZXRyaWNfc2lua191cmwiOiJodHRwczpcL1wvY2VyYmVydXMuZW1lYS5wb2x5bmV0LnM3M2Nsb3VkLmNvbTo0NDNcL21ldHJpY3NcL3YxIn0=", // mandatory
+            channelId: "Live DASH ABR via CDN", // optional
             debug: 'info',
           };
           var wrapper = S73DashjsWrapper(s73SdkConfig);
           wrapper.wrapPlayer(player);
           wrapper.p2p.enable();
-          wrapper.dimensions.setCustomDimension1("the quick brown fox");
-          wrapper.dimensions.setCustomDimension2("abc123");
 
           player.initialize(
             document.querySelector("#video"),
@@ -102,17 +96,3 @@
     </p>
   </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
