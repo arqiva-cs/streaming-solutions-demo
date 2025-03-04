@@ -91,6 +91,22 @@
             "https://synthetic-stream.global.ssl.fastly.net/dash/demo.mpd",
             true
           );
+          player.updateSettings({
+                  streaming: {
+                      delay: {
+                          liveDelay: 30
+                      },
+                      buffer: {
+                          stableBufferTime: 30,
+                          bufferTimeAtTopQuality: 30,
+                          bufferTimeAtTopQualityLongForm: 30,
+                          initialBufferLevel: 30,
+                      },
+                      streaming: {
+                          limitBitrateByPortal: false,
+                      },
+                  }
+              });         
         })();
       </script>
     </p>
