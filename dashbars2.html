@@ -1,1 +1,114 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Arqiva dash demo</title>
 
+    <!-- dash.js should be always called BEFORE the System73 SDK dependencies -->
+    <script
+      src="//cdn.dashjs.org/v4.7.4/dash.all.min.js"
+      type="application/javascript"
+    ></script>
+
+    <!-- dash.js and System73 SDK dependencies should be always called BEFORE the video tag. -->
+    <script
+      src="//cdn.s73cloud.com/4/s73-sdk-dashjs.js"
+      type="application/javascript"
+    ></script>
+
+    <style>
+        .s73_log  {
+            color:blue;
+        }
+        .s73_info  {
+            color:grey;
+        }
+        .s73_warn  {
+            color:orange;
+        }
+        .s73_error  {
+            color:red;
+        }
+    </style>
+
+  </head>
+  <body>
+    <h1 style="font-family: verdana">Arqiva Analytics and Delivery Optimisation demo</h1>
+    <h2 style="font-family: verdana" id="mode">Live DASH ABR bars, dash.js player, optimisation enabled</h2>
+
+    <p>
+      <video id="video" width="640" autoplay muted></video>
+    <p>
+      Debug:
+      <div id="sys73Debug">
+      </div>
+      <script>
+        (() => {
+         //   const originalLog = console.log;
+            const originalInfo = console.info;
+         //   const originalWarn = console.warn;
+         //   const originalError = console.error;
+            const debugEl = document.getElementById('sys73Debug');
+
+            const append = (fn, cssclass, args) => {
+                let msgDiv = document.createElement('div');
+                msgDiv.classList = [cssclass];
+                msgDiv.innerHTML = args;
+                debugEl.prepend(msgDiv);
+                fn(...args);
+            }
+/*
+            console.error = function(...args){
+                append(originalLog,'s73_log', args);
+            };
+*/
+            console.info = function(...args){
+                append(originalInfo,'s73_info', args);
+            };
+/*
+            console.warn = function(...args){
+                append(originalWarn,'s73_warn', args);
+            };
+
+            console.error = function(...args){
+                append(originalError,'s73_error', args);
+            };
+*/
+          var player = dashjs.MediaPlayer().create();
+
+          var s73SdkConfig = {
+            apiKey:
+              "eyJoYXNoZWRfa2V5IjoiU1BpRWVLc1ZqR09HeGp4b0hVRlN2TU9WQktLel91dmNYemJsOEp4V3d6WSIsInNpZ25hbF9zZXJ2ZXJfdXJsIjoid3NzOlwvXC9jZXJiZXJ1cy5lbWVhLnBvbHluZXQuczczY2xvdWQuY29tOjQ0M1wvd3MiLCJzdHVuX3NlcnZlcl91cmwiOlsic3R1bjpzdHVuLWVtZWEtMDEuczczY2xvdWQuY29tOjM0NzgiLCJzdHVuOnN0dW4tZW1lYS0wMi5zNzNjbG91ZC5jb206MzQ3OCJdLCJtZXRyaWNfc2lua191cmwiOiJodHRwczpcL1wvY2VyYmVydXMuZW1lYS5wb2x5bmV0LnM3M2Nsb3VkLmNvbTo0NDNcL21ldHJpY3NcL3YxIn0=", // mandatory
+            channelId: "Live DASH ABR bars", // optional
+            debug: 'info',
+          };
+          var wrapper = S73DashjsWrapper(s73SdkConfig);
+          wrapper.wrapPlayer(player);
+          wrapper.p2p.enable();
+
+          player.initialize(
+            document.querySelector("#video"),
+            "https://fe790af7ab4b4b919b6e8d0510eacb4d.msvdn.net/s73/dash/demo.mpd",
+            true
+          );
+          player.updateSettings({
+                  streaming: {
+                      delay: {
+                          liveDelay: 30
+                      },
+                      buffer: {
+                          stableBufferTime: 30,
+                          bufferTimeAtTopQuality: 30,
+                          bufferTimeAtTopQualityLongForm: 30,
+                          initialBufferLevel: 30,
+                      },
+                      streaming: {
+                          limitBitrateByPortal: false,
+                      },
+                  }
+              });         
+        })();
+      </script>
+    </p>
+  </body>
+</html>
